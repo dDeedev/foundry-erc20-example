@@ -1,6 +1,4 @@
-ds-test/=lib/forge-std/lib/ds-test/src/
+ds-test/=lib/foundry-devops/lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
+foundry-devops/=lib/foundry-devops/
 openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/
-openzeppelin/=lib/openzeppelin-contracts/contracts/
-sstore2/=lib/sstore2/contracts/
-solmate/=lib/solmate/src/
