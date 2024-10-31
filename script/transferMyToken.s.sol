@@ -7,16 +7,33 @@ import "openzeppelin-contracts/token/ERC20/ERC20.sol";
 
 contract TransferScript is Script {
     address ownerAddress;
-    address nftContractAddress = 0x46A797C81379D77bbed8ea4BdBF1Ce62557e03Fb;
+    address nftContractAddress;
+    address receiver;
+    uint64 currentNonce;
 
     function setUp() public {
         ownerAddress = vm.envAddress("OWNER");
+        receiver = vm.envAddress("RECIPIENT_ADDRESS");
+        nftContractAddress = vm.envAddress("TOKEN_ADDRESS");
+        currentNonce = vm.getNonce(ownerAddress);
     }
 
     function run() external {
         vm.startBroadcast();
         ERC20 myToken = ERC20(payable(nftContractAddress));
-        myToken.transfer(0x40C8e86802624bBcC5C4feFE49145c5C9843ffDe, 100_000000000000000000);
+
+        myToken.transfer(receiver, 100000_000000000000000000);
+        nonceUp();
+
+        myToken.transfer(receiver, 100000_000000000000000000);
+        nonceUp();
+
+        myToken.transfer(receiver, 100000_000000000000000000);
         vm.stopBroadcast();
+    }
+
+    function nonceUp() public {
+        vm.setNonce(ownerAddress, currentNonce + uint64(1));
+        currentNonce++;
     }
 }
